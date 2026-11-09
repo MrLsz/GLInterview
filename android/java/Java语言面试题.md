@@ -197,7 +197,12 @@ JDK 8 放弃分段锁，改为 CAS + synchronized 的细粒度锁：读操作完
 
 浅拷贝只复制对象本身和它的基本类型字段，引用类型字段仍指向原对象的同一块内存，新旧对象共享引用，修改其中一个的引用内容会相互影响。深拷贝把引用类型字段也递归复制，新旧对象完全独立，互不影响。
 
-实现深拷贝的常见方式：一是手动递归复制每个引用字段；二是实现 Cloneable 接口重写 clone，对引用字段逐个 clone（注意默认的 Object.clone 是浅拷贝）；三是利用序列化，把对象序列化到字节流再反序列化，得到全新对象（要求对象及其引用字段都实现 Serializable）；四是用第三方库（Jackson/Gson/Fastjson）的 JSON 序列化做深拷贝。
+实现深拷贝的常见方式：
+
+- 手动递归复制每个引用字段
+- 实现 Cloneable 接口重写 clone，对引用字段逐个 clone（注意默认的 Object.clone 是浅拷贝）
+- 利用序列化，把对象序列化到字节流再反序列化，得到全新对象（要求对象及其引用字段都实现 Serializable）
+- 用第三方库（Jackson/Gson/Fastjson）的 JSON 序列化做深拷贝
 
 
 ### 34、Java 创建线程有哪几种方式？
@@ -207,7 +212,14 @@ JDK 8 放弃分段锁，改为 CAS + synchronized 的细粒度锁：读操作完
 
 ### 35、线程有哪几种状态？
 
-线程六种状态：NEW（新建未 start）、RUNNABLE（就绪或运行中，Java 把就绪和运行合并）、BLOCKED（等待获取 synchronized 锁）、WAITING（无限期等待，wait/join/LockSupport.park 未带超时）、TIMED_WAITING（限时等待，sleep/带超时的 wait/join）、TERMINATED（终止）。
+线程六种状态：
+
+- NEW：新建未 start
+- RUNNABLE：就绪或运行中，Java 把就绪和运行合并
+- BLOCKED：等待获取 synchronized 锁
+- WAITING：无限期等待，wait/join/LockSupport.park 未带超时
+- TIMED_WAITING：限时等待，sleep/带超时的 wait/join
+- TERMINATED：终止
 
 
 ### 36、wait() 和 sleep() 有什么区别？
@@ -360,7 +372,12 @@ synchronized 是 JVM 层面的同步关键字，底层依赖**对象头里的 Ma
 
 工作流程：提交任务后，先判断核心线程是否满——未满则创建核心线程执行，已满则把任务放入工作队列；队列满后再判断最大线程是否满——未满则创建非核心线程执行，已满则执行拒绝策略。简记「核心线程 → 队列 → 非核心线程 → 拒绝策略」。
 
-四种拒绝策略：AbortPolicy（默认，抛 RejectedExecutionException）；CallerRunsPolicy（由提交任务的调用线程自己执行，能减缓提交速度）；DiscardPolicy（直接丢弃）；DiscardOldestPolicy（丢弃队列最旧的任务再尝试提交）。
+四种拒绝策略：
+
+- AbortPolicy：默认，抛 RejectedExecutionException
+- CallerRunsPolicy：由提交任务的调用线程自己执行，能减缓提交速度
+- DiscardPolicy：直接丢弃
+- DiscardOldestPolicy：丢弃队列最旧的任务再尝试提交
 
 
 ### 42、ThreadLocal 的原理是什么、会导致内存泄漏吗？
